@@ -1,0 +1,36 @@
+body {
+  background:url("../images/crop.jpg");
+  background-size: cover;
+}
+
+#brand{ 
+  font-family: 'Lobster', cursive;
+  font-size: 40px;
+}
+
+#formDiv{
+  padding: 50px;
+  border: 2px;
+  border-style: solid;
+  opacity: .7;
+  border-color: lightgrey;
+}
+
+#formDiv:hover {
+  opacity: 1;
+}
+
+.form-container {
+  justify-content: center;
+  height: calc(100vh - 86px);
+  display: flex;
+  align-items: center;
+}
+
+.carousel-item > img {
+  margin:80px auto;
+}
+
+#empty{
+  opacity: 0;
+}
