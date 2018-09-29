@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Project 1 for Rutgers Coding Boot Camp">
+  <meta name="author" content="Peter Zafonte">
+
+  <title>Find Food</title>
+
+  <!-- <link rel="icon" type="image/png" href="assets/images/favicon.png">
+        <link rel="stylesheet" type="text/css" href="assets/css/reset.css"> -->
+  <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Montserrat+Subrayada|Quicksand">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+    crossorigin="anonymous">
+  <link rel="stylesheet" type="text/css" href="assets/css/style.css">
+
+  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+</head>
+
+<body>
+  <div class="container">
+    <h2>Get Recipes</h1>
+    <div class="input-group input-group-lg">
+      <div class="input-group-prepend">
+        <span class="input-group-text" id="inputGroup-sizing-lg">Search</span>
+      </div>
+      <input type="text" class="form-control" id="recipe-search-text" aria-label="Large" aria-describedby="inputGroup-sizing-sm">
+    </div>
+    <button type="button" class="btn btn-primary" id="get-recipes">Get Recipes</button>
+
+    <div id="recipes"></div>
+
+    <h2>Get Foursqure Restaurants</h1>
+    <div class="input-group input-group-lg">
+        <div class="input-group-prepend">
+          <span class="input-group-text" id="inputGroup-sizing-lg">Search</span>
+        </div>
+        <input type="text" class="form-control" id="restaurant-search-text" aria-label="Large" aria-describedby="inputGroup-sizing-sm">
+      </div>
+
+      <div class="input-group input-group-lg">
+          <div class="input-group-prepend">
+            <span class="input-group-text" id="inputGroup-sizing-lg">Location</span>
+          </div>
+          <input type="text" class="form-control" id="location-text" aria-label="Large" aria-describedby="inputGroup-sizing-sm">
+        </div>
+        <button type="button" class="btn btn-primary" id="get-restaurants">Get Restaurants</button>
+
+        <div id="restaurants"></div>
+
+  </div>
+
+  <!-- <script type="text/javascript" src="assets/javascript/questions.js"></script> -->
+  <script type="text/javascript" src="assets/javascript/app.js"></script>
+</body>
+
+</html>
