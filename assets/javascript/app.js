@@ -4,12 +4,12 @@ $(document).ready(function () {
   var edamamApiKey = "025e31a83b87bf9cc6cdf813e6a3da39";
 
   //Henry's FOURSQUARE API INFO
-  // var foursquareClientId = "CCB33WHFYPDPAAVR3D2YNRFEMWT1TM3HWHWFBDMM5MVKWE0X";
-  // var foursquareClientSecret = "G2QO2ALFA2RJHREZIZIVHD35AFIUSIIOPAW2YPUCIXJE4N03";
+  var foursquareClientId = "CCB33WHFYPDPAAVR3D2YNRFEMWT1TM3HWHWFBDMM5MVKWE0X";
+  var foursquareClientSecret = "G2QO2ALFA2RJHREZIZIVHD35AFIUSIIOPAW2YPUCIXJE4N03";
 
   //Peter's FOURSQUARE API Info
-  var foursquareClientId = "1M52NGCBLS0MUK3HBG1AVRDIOCGW3ZPXW3AVQOLS5FS4CIYW";
-  var foursquareClientSecret = "FFUS2J0ZOIINXQ440UAVHBPNSOY5HKHY12UXPQG1YUOQ3T1W";
+  //var foursquareClientId = "1M52NGCBLS0MUK3HBG1AVRDIOCGW3ZPXW3AVQOLS5FS4CIYW";
+  //var foursquareClientSecret = "FFUS2J0ZOIINXQ440UAVHBPNSOY5HKHY12UXPQG1YUOQ3T1W";
 
 
   var getRecipes = function (searchTerm) {
@@ -28,36 +28,73 @@ $(document).ready(function () {
 
   var getRestaurants = function (searchTerm, location) {
 
-    var restaurantQueryURL = `https://api.foursquare.com/v2/venues/search?client_id=${foursquareClientId}&client_secret=${foursquareClientSecret}&limit=1&near=${location}&query=${searchTerm}&v=20180323`;
+    var restaurantQueryURL = `https://api.foursquare.com/v2/venues/search?client_id=${foursquareClientId}&client_secret=${foursquareClientSecret}&limit=3&near=${location}&query=${searchTerm}&v=20180323`;
 
     $.ajax({
       url: restaurantQueryURL,
       method: "GET"
     }).then(function (venueObj) {
-      //Grab array holding prefix and suffix... I changed the .then function to give venuePhotObj instead of "resposnse" for clarity otherwise we have to say response.response.photos.items[]... that's confusing
-      //-Peter
+  
       console.log(venueObj);
       $("#restaurants").html("");
-      for (var i = 0; i < venueObj.response.venues.length; i++) {
-        parseRestaurantObjToDOM(venueObj, i);
-        var venueID = venueObj.response.venues[i].id;
-        var photoQueryURL = `https://api.foursquare.com/v2/venues/${venueID}/photos?client_id=${foursquareClientId}&client_secret=${foursquareClientSecret}&v=20180323&limit=1`;
 
-        return $.ajax({
-          url: photoQueryURL,
-          method: "GET"
-        }, venueObj).then(function (venuePhotoObj) {
-          
-          var venuePhoto = venuePhotoObj.response.photos.items;
-          console.log(venuePhoto);
-          $(`#${venueID}`).attr("src", venuePhoto[0].prefix + "original" + venuePhoto[0].suffix)
-        });
+      getVenueInfo(0);
+
+      function getVenueInfo(i) {
+        if (i < venueObj.response.venues.length) {
+
+          parseRestaurantObjToDOM(venueObj, i);
+          var venueID = venueObj.response.venues[i].id;
+          var photoQueryURL = `https://api.foursquare.com/v2/venues/${venueID}/photos?client_id=${foursquareClientId}&client_secret=${foursquareClientSecret}&v=20180323&limit=1`;
+
+          //get photo
+          $.ajax({
+            url: photoQueryURL,
+            method: "GET"
+          }).then(function (venuePhotoObj) {
+
+            var venuePhoto = venuePhotoObj.response.photos.items;
+            console.log(venuePhoto);
+            $(`#${venueID}`).attr("src", venuePhoto[0].prefix + "original" + venuePhoto[0].suffix)
+            
+            // get menu
+            return $.ajax({
+              url: `https://api.foursquare.com/v2/venues/${venueID}/menu?client_id=${foursquareClientId}&client_secret=${foursquareClientSecret}&v=20180323&limit=1`,
+              method: "GET"
+            })
+          }).then(function(menuInfo) {
+            console.log(menuInfo);
+            var venueMenuLink = menuInfo.response.menu.provider.attributionLink;
+            console.log("Menu Link :" + venueMenuLink);
+
+            //get links
+            return $.ajax({
+              url: `https://api.foursquare.com/v2/venues/${venueID}/links?client_id=${foursquareClientId}&client_secret=${foursquareClientSecret}&v=20180323&limit=1`,
+              method: "GET"
+            })
+          }).then(function(linkInfo) {
+            console.log(linkInfo);
+            var links = linkInfo.response.links.items;
+
+            LinkLoop: //We want to break out of this loop when we get the first image.
+            for (var j = 0; j < links.length; j ++)
+            {
+              if(links[i].url){
+                console.log(links[i].url)
+                break LinkLoop;
+              }
+            }
+
+            i++;
+            getVenueInfo(i);
+          })
+        }
       }
 
     });
 
   }
-
+  
   var parseRecipeObjToDOM = function (recipeObj) {
     var recipes = recipeObj.hits;
     var recipeHTML;
@@ -70,7 +107,9 @@ $(document).ready(function () {
     for (var i = 0; i < recipes.length; i++) {
 
       //Create HTML div block for recipe card top level
-      recipeHTML = $("<div class='recipe card' id='r-" + i + "'>").css({"width": "18rem"});
+      recipeHTML = $("<div class='recipe card' id='r-" + i + "'>").css({
+        "width": "18rem"
+      });
 
       console.log(recipes[i].recipe.label);
       //Create HTML img block for recipe card second level
