@@ -70,7 +70,7 @@ $(document).ready(function () {
     for (var i = 0; i < recipes.length; i++) {
 
       //Create HTML div block for recipe card top level
-      recipeHTML = $("<div class='recipe card' id='r-" + i + "'>").css({"width": "18rem"});
+      recipeHTML = $("<div class='col-5 recipe card' id='r-" + i + "'>").css({"width": "18rem"});
 
       console.log(recipes[i].recipe.label);
       //Create HTML img block for recipe card second level
@@ -80,7 +80,7 @@ $(document).ready(function () {
       recipeCardBody = $("<div class='card-body'>");
       recipeTitle = $("<h5 class='card-title'>").html(recipes[i].recipe.label);
       recipeText = $("<p class='card-text'>").text("Here are the ingredients you need to make your dish.");
-      recipeCardBody.append(recipeTitle).append(recipeText);
+      recipeCardBody.append(recipeText);
 
       //Create HTML ul block for recipe list  second level
       recipeIngredientListHTML = $("<ul class='list-group list-group-flush'>");
@@ -90,8 +90,8 @@ $(document).ready(function () {
         var recipeIngredientListItemHTML = $("<li class='list-group-item'>").html(recipes[i].recipe.ingredientLines[j]);
         recipeIngredientListHTML.append(recipeIngredientListItemHTML);
       }
-
-      recipeHTML.append(recipeImgHTML).append(recipeCardBody).append(recipeIngredientListHTML);
+      recipeCardBody.append(recipeIngredientListHTML);
+      recipeHTML.append(recipeTitle).append(recipeImgHTML).append(recipeCardBody);
 
       console.log(recipeHTML);
 
@@ -108,9 +108,7 @@ $(document).ready(function () {
     var restaurantFormattedAddress;
 
     //Create HTML div block for restaurant card top level
-    restaurantHTML = $("<div class='restaurant card' id='l-" + i + "'>").css({
-      "width": "18rem"
-    });
+    restaurantHTML = $("<div class='restaurant card' id='l-" + i + "'>");
     restaurantID = restaurants[i].id;;
 
     //Create HTML img block for restaurant card second level
@@ -127,17 +125,11 @@ $(document).ready(function () {
     $("#restaurants").append(restaurantHTML);
   }
 
-  $("#get-recipes").on("click", function (event) {
-    event.preventDefault();
-    var searchTerm = $("#recipe-search-text").val().trim().toLowerCase();
-    getRecipes(searchTerm);
-  });
-
-  $("#get-restaurants").on("click", function (event) {
+  $("#get-results").on("click", function (event) {
     event.preventDefault();
     var location = $("#location-text").val().trim().toLowerCase();
-    var searchTerm = $("#restaurant-search-text").val().trim().toLowerCase();
+    var searchTerm = $("#search-text").val().trim().toLowerCase();
     getRestaurants(searchTerm, location);
-
+    getRecipes(searchTerm);
   });
 });

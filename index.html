@@ -46,12 +46,12 @@
 
       <form class="form-inline my-2 mr-2 my-lg-0">
         <div class="input-group">
-          <input class="form-control mr-sm-2" type="search" placeholder="Enter Food" aria-label="Search" required>
+          <input class="form-control mr-sm-2" id="search-text" type="search" placeholder="Enter Food" aria-label="Search" required>
         </div>
         <div class="input-group">
-          <input class="form-control mr-sm-2" type="search" placeholder="Enter Location" aria-label="Search" required>
+          <input class="form-control mr-sm-2" id="location-text" type="search" placeholder="Enter Location" aria-label="Search" required>
         </div>
-        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+        <button id="get-results" class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
       </form>
     </div>
   </nav>
@@ -117,8 +117,17 @@
       <span class="sr-only">Next</span>
     </a>
   </div>
-
+  <div class="row">
+    <div id="restaurants" class="col-6 d-flex justify-content-center">
+      <div class="row"></div>
+    </div>
+    <div id="recipes" class="col-6 d-flex">
+      <div class="row"></div>
+    </div>
+  </div>
+  
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="assets/javascript/app.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.13.0/umd/popper.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.2/js/bootstrap.min.js"></script>
 </body>

@@ -1,6 +1,8 @@
 body {
   background:url("../images/crop.jpg");
   background-size: cover;
+  background-attachment: fixed;
+  background-repeat: no-repeat;
 }
 
 #brand{ 
@@ -33,4 +35,26 @@ body {
 
 #empty{
   opacity: 0;
+}
+
+.d-flex{
+  flex-wrap: wrap;
+}
+
+.recipe{
+  margin: 5px;
+}
+
+.card-body{
+  padding:0;
+  background-color: rgb(red, green, blue)
+}
+
+.list-group-item{
+  padding:.25rem;
+  background-color: rgba(3, 192, 3, 0.4);
+}
+
+.card{
+  background-color: rgb(255, 255, 255, 0.7);
 }
