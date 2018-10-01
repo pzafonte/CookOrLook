@@ -28,30 +28,67 @@ $(document).ready(function () {
 
   var getRestaurants = function (searchTerm, location) {
 
-    var restaurantQueryURL = `https://api.foursquare.com/v2/venues/search?client_id=${foursquareClientId}&client_secret=${foursquareClientSecret}&limit=1&near=${location}&query=${searchTerm}&v=20180323`;
+    var restaurantQueryURL = `https://api.foursquare.com/v2/venues/search?client_id=${foursquareClientId}&client_secret=${foursquareClientSecret}&limit=3&near=${location}&query=${searchTerm}&v=20180323`;
 
     $.ajax({
       url: restaurantQueryURL,
       method: "GET"
     }).then(function (venueObj) {
-      //Grab array holding prefix and suffix... I changed the .then function to give venuePhotObj instead of "resposnse" for clarity otherwise we have to say response.response.photos.items[]... that's confusing
-      //-Peter
+  
       console.log(venueObj);
       $("#restaurants").html("");
-      for (var i = 0; i < venueObj.response.venues.length; i++) {
-        parseRestaurantObjToDOM(venueObj, i);
-        var venueID = venueObj.response.venues[i].id;
-        var photoQueryURL = `https://api.foursquare.com/v2/venues/${venueID}/photos?client_id=${foursquareClientId}&client_secret=${foursquareClientSecret}&v=20180323&limit=1`;
 
-        return $.ajax({
-          url: photoQueryURL,
-          method: "GET"
-        }, venueObj).then(function (venuePhotoObj) {
-          
-          var venuePhoto = venuePhotoObj.response.photos.items;
-          console.log(venuePhoto);
-          $(`#${venueID}`).attr("src", venuePhoto[0].prefix + "original" + venuePhoto[0].suffix)
-        });
+      getVenueInfo(0);
+
+      function getVenueInfo(i) {
+        if (i < venueObj.response.venues.length) {
+
+          parseRestaurantObjToDOM(venueObj, i);
+          var venueID = venueObj.response.venues[i].id;
+          var photoQueryURL = `https://api.foursquare.com/v2/venues/${venueID}/photos?client_id=${foursquareClientId}&client_secret=${foursquareClientSecret}&v=20180323&limit=1`;
+
+          //get photo
+          $.ajax({
+            url: photoQueryURL,
+            method: "GET"
+          }).then(function (venuePhotoObj) {
+
+            var venuePhoto = venuePhotoObj.response.photos.items;
+            console.log(venuePhoto);
+            $(`#${venueID}`).attr("src", venuePhoto[0].prefix + "original" + venuePhoto[0].suffix)
+            
+            // get menu
+            return $.ajax({
+              url: `https://api.foursquare.com/v2/venues/${venueID}/menu?client_id=${foursquareClientId}&client_secret=${foursquareClientSecret}&v=20180323&limit=1`,
+              method: "GET"
+            })
+          }).then(function(menuInfo) {
+            console.log(menuInfo);
+            var venueMenuLink = menuInfo.response.menu.provider.attributionLink;
+            console.log("Menu Link :" + venueMenuLink);
+
+            //get links
+            return $.ajax({
+              url: `https://api.foursquare.com/v2/venues/${venueID}/links?client_id=${foursquareClientId}&client_secret=${foursquareClientSecret}&v=20180323&limit=1`,
+              method: "GET"
+            })
+          }).then(function(linkInfo) {
+            console.log(linkInfo);
+            var links = linkInfo.response.links.items;
+
+            LinkLoop: //We want to break out of this loop when we get the first image.
+            for (var j = 0; j < links.length; j ++)
+            {
+              if(links[i].url){
+                console.log(links[i].url)
+                break LinkLoop;
+              }
+            }
+
+            i++;
+            getVenueInfo(i);
+          })
+        }
       }
 
     });
