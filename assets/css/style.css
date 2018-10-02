@@ -42,7 +42,8 @@ body {
 }
 
 .recipe{
-  margin: 5px;
+  margin-left: 30px;
+  margin-bottom: 30px;
 }
 
 .card-body{
@@ -58,3 +59,24 @@ body {
 .card{
   background-color: rgb(255, 255, 255, 0.7);
 }
+
+#listBody{
+  margin-top: 60px;
+}
+
+.restaurant{
+  margin-left: 70px;
+  padding: 45px;
+  margin-bottom: 30px;
+}
+
+h5{
+  font-family: 'Lobster', cursive;
+  font-size: 30px;
+}
+
+.card-text{
+  font-family: 'Ubuntu', sans-serif;
+}
+
+
