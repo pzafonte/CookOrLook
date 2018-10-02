@@ -11,12 +11,12 @@ $(document).ready(function () {
 
 
   //Peter's FOURSQUARE API Info
-  // var foursquareClientId = "1M52NGCBLS0MUK3HBG1AVRDIOCGW3ZPXW3AVQOLS5FS4CIYW";
-  // var foursquareClientSecret = "LACZZB5UQAIAGQWRB25EMBTVZOECUP4JLQMMZTCAIS1MKVF3";
+  var foursquareClientId = "SHVHQI2IKFBKLWX4E05DS0NZXBEGZHSL3DTLEXHJBWVZAZOH";
+  var foursquareClientSecret = "BDEGVWB3EATF5ZHHWDB4MAIQSU0L0P3JQFKNNJA5D1CIVDSY";
 
   //Patrick's FOURSQUARE API Info
-  var foursquareClientId = "B0HAMAHTQD4FPS54HEDYVX5DSK5NUAHKYMU151KU0A5YXGAV";
-  var foursquareClientSecret = "QTBOGBUPYD0HFOV30CVNMYQGADU2HBE0FTZYMCUNKOHGHZ53";
+  // var foursquareClientId = "B0HAMAHTQD4FPS54HEDYVX5DSK5NUAHKYMU151KU0A5YXGAV";
+  // var foursquareClientSecret = "QTBOGBUPYD0HFOV30CVNMYQGADU2HBE0FTZYMCUNKOHGHZ53";
 
 
 
@@ -68,21 +68,14 @@ $(document).ready(function () {
             
             // get menu
             return $.ajax({
-              url: `https://api.foursquare.com/v2/venues/${venueID}/tips?client_id=${foursquareClientId}&client_secret=${foursquareClientSecret}&v=20180323`,
+              url: `https://api.foursquare.com/v2/venues/${venueID}/tips?client_id=${foursquareClientId}&client_secret=${foursquareClientSecret}&v=20180323&sort=popular`,
               method: "GET"
             })
           }).then(function(tipInfo) {
             console.log(tipInfo);
             var tips = tipInfo.response.tips.items;
-
-            console.log(tips);
-
-            for (var k = 0; k < tips.length; k++){
-              $(`#${venueID} p`).text(tips[k].text);
-              console.log(tips[k].text);
-            }
-            // var venueMenuLink = menuInfo.response.menu.provider.attributionLink;
-            // console.log("Menu Link :" + venueMenuLink);
+            $(`#${venueID} p`).text("Top Customer Tip: " + tips[0].text);
+          
 
             //get links
             return $.ajax({
@@ -97,7 +90,7 @@ $(document).ready(function () {
             for (var j = 0; j < links.length; j ++)
             {
               if(links[j].url){
-                $(`#${venueID} a`).attr("href", links[j].url).text("Link to restaurant!");
+                $(`#${venueID} a`).attr("href", links[j].url).text("Link Related to Restaurant");
                 console.log(links[j].url)
                 break LinkLoop;
               }
@@ -125,7 +118,7 @@ $(document).ready(function () {
     for (var i = 0; i < recipes.length; i++) {
 
       //Create HTML div block for recipe card top level
-      recipeHTML = $("<div class='col-5 recipe card' id='r-" + i + "'>").css({"width": "18rem"});
+      recipeHTML = $("<div class='w-100 recipe card' id='r-" + i + "'>").css({"width": "18rem"});
 
       console.log(recipes[i].recipe.label);
       //Create HTML img block for recipe card second level
@@ -136,7 +129,7 @@ $(document).ready(function () {
       recipeTitle = $("<h5 class='card-title'>").html(recipes[i].recipe.label);
       recipeText = $("<p class='card-text'>").text("Here are the ingredients you need to make your dish.");
       recipeLink = $("<a>").attr("href", recipes[i].recipe.url).text("Click here for the full recipe!");
-      recipeCardBody.append(recipeText).append(recipeLink);
+      recipeCardBody.append(recipeLink).append(recipeText);
 
       //Create HTML ul block for recipe list  second level
       recipeIngredientListHTML = $("<ul class='list-group list-group-flush'>");
@@ -163,10 +156,8 @@ $(document).ready(function () {
     var restaurantTitle;
     var restaurantFormattedAddress;
 
-    $("#restaurants").html("");
-
     //Create HTML div block for restaurant card top level
-    restaurantHTML = $("<div class='restaurant card' id='l-" + i + "'>");
+    restaurantHTML = $("<div class='w-75 restaurant card' id='l-" + i + "'>");
     restaurantID = restaurants[i].id;;
 
     //Create HTML img block for restaurant card second level

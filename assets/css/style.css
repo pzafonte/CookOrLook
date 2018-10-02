@@ -37,13 +37,20 @@ body {
   opacity: 0;
 }
 
-.d-flex{
+/* .d-flex{
   flex-wrap: wrap;
+} */
+
+.card-columns {
+  display: inline-block;
 }
 
 .recipe{
-  margin-left: 30px;
-  margin-bottom: 30px;
+
+  width: 33%;
+
+  /* margin-left: 30px;
+  margin-bottom: 30px; */
 }
 
 .card-body{
