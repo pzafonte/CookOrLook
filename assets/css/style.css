@@ -58,3 +58,7 @@ body {
 .card{
   background-color: rgb(255, 255, 255, 0.7);
 }
+
+#listBody{
+  margin-top: 60px;
+}

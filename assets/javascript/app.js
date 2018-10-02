@@ -70,7 +70,7 @@ $(document).ready(function () {
     for (var i = 0; i < recipes.length; i++) {
 
       //Create HTML div block for recipe card top level
-      recipeHTML = $("<div class='col-5 recipe card' id='r-" + i + "'>").css({"width": "18rem"});
+      recipeHTML = $("<div class='col-12 col-md-5 recipe card' id='r-" + i + "'>").css({"width": "18rem"});
 
       console.log(recipes[i].recipe.label);
       //Create HTML img block for recipe card second level
@@ -131,5 +131,6 @@ $(document).ready(function () {
     var searchTerm = $("#search-text").val().trim().toLowerCase();
     getRestaurants(searchTerm, location);
     getRecipes(searchTerm);
+    $("#carouselExampleIndicators").hide();
   });
 });
