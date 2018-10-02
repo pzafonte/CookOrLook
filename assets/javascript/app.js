@@ -1,5 +1,6 @@
-$(document).ready(function () {
 
+$(document).ready(function () {
+  $("#headerRow").hide();
   var edamamAppId = "919ca68b";
   var edamamApiKey = "025e31a83b87bf9cc6cdf813e6a3da39";
 
@@ -8,18 +9,19 @@ $(document).ready(function () {
   // var foursquareClientId = "CCB33WHFYPDPAAVR3D2YNRFEMWT1TM3HWHWFBDMM5MVKWE0X";
   // var foursquareClientSecret = "G2QO2ALFA2RJHREZIZIVHD35AFIUSIIOPAW2YPUCIXJE4N03";
 
+
   //Peter's FOURSQUARE API Info
   // var foursquareClientId = "1M52NGCBLS0MUK3HBG1AVRDIOCGW3ZPXW3AVQOLS5FS4CIYW";
   // var foursquareClientSecret = "LACZZB5UQAIAGQWRB25EMBTVZOECUP4JLQMMZTCAIS1MKVF3";
-
 
   //Patrick's FOURSQUARE API Info
   var foursquareClientId = "B0HAMAHTQD4FPS54HEDYVX5DSK5NUAHKYMU151KU0A5YXGAV";
   var foursquareClientSecret = "QTBOGBUPYD0HFOV30CVNMYQGADU2HBE0FTZYMCUNKOHGHZ53";
 
 
+
   var getRecipes = function (searchTerm) {
-    var queryURL = `https://api.edamam.com/search?q=${searchTerm}&app_id=${edamamAppId}&app_key=${edamamApiKey}&from=0&to=6`
+    var queryURL = `https://api.edamam.com/search?q=${searchTerm}&app_id=${edamamAppId}&app_key=${edamamApiKey}&from=0&to=5`
 
     $.ajax({
       url: queryURL,
@@ -34,7 +36,8 @@ $(document).ready(function () {
 
   var getRestaurants = function (searchTerm, location) {
 
-    var restaurantQueryURL = `https://api.foursquare.com/v2/venues/search?client_id=${foursquareClientId}&client_secret=${foursquareClientSecret}&limit=1&near=${location}&query=${searchTerm}&v=20180323`;
+
+    var restaurantQueryURL = `https://api.foursquare.com/v2/venues/search?client_id=${foursquareClientId}&client_secret=${foursquareClientSecret}&limit=10&near=${location}&query=${searchTerm}&v=20180323`;
 
     $.ajax({
       url: restaurantQueryURL,
@@ -122,7 +125,7 @@ $(document).ready(function () {
     for (var i = 0; i < recipes.length; i++) {
 
       //Create HTML div block for recipe card top level
-      recipeHTML = $("<div class='col-12 col-md-5 recipe card' id='r-" + i + "'>").css({"width": "18rem"});
+      recipeHTML = $("<div class='col-5 recipe card' id='r-" + i + "'>").css({"width": "18rem"});
 
       console.log(recipes[i].recipe.label);
       //Create HTML img block for recipe card second level
@@ -188,10 +191,11 @@ $(document).ready(function () {
 
   $("#get-results").on("click", function (event) {
     event.preventDefault();
+    $(".carousel").hide();
+    $("#headerRow").show();
     var location = $("#location-text").val().trim().toLowerCase();
     var searchTerm = $("#search-text").val().trim().toLowerCase();
     getRestaurants(searchTerm, location);
     getRecipes(searchTerm);
-    $("#carouselExampleIndicators").hide();
   });
 });

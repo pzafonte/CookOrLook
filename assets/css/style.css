@@ -79,4 +79,14 @@ h5{
   font-family: 'Ubuntu', sans-serif;
 }
 
-
+h1{
+  font-family: 'Pacifico', cursive;
+  color: rgb(255, 255, 255);
+  text-shadow:
+		-3px -3px 0 #000,
+		1px -1px 0 #000,
+		-1px 1px 0 #000,
+    1px 1px 0 #000;
+    margin-bottom: 25px;
+    font-size: 50px;
+}
