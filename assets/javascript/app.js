@@ -4,16 +4,20 @@ $(document).ready(function () {
   var edamamApiKey = "025e31a83b87bf9cc6cdf813e6a3da39";
 
   //Henry's FOURSQUARE API INFO
-  var foursquareClientId = "CCB33WHFYPDPAAVR3D2YNRFEMWT1TM3HWHWFBDMM5MVKWE0X";
-  var foursquareClientSecret = "G2QO2ALFA2RJHREZIZIVHD35AFIUSIIOPAW2YPUCIXJE4N03";
+  // var foursquareClientId = "CCB33WHFYPDPAAVR3D2YNRFEMWT1TM3HWHWFBDMM5MVKWE0X";
+  // var foursquareClientSecret = "G2QO2ALFA2RJHREZIZIVHD35AFIUSIIOPAW2YPUCIXJE4N03";
 
   //Peter's FOURSQUARE API Info
   // var foursquareClientId = "1M52NGCBLS0MUK3HBG1AVRDIOCGW3ZPXW3AVQOLS5FS4CIYW";
   // var foursquareClientSecret = "LACZZB5UQAIAGQWRB25EMBTVZOECUP4JLQMMZTCAIS1MKVF3";
 
+  //Patrick's FOURSQUARE API Info
+  var foursquareClientId = "B0HAMAHTQD4FPS54HEDYVX5DSK5NUAHKYMU151KU0A5YXGAV";
+  var foursquareClientSecret = "QTBOGBUPYD0HFOV30CVNMYQGADU2HBE0FTZYMCUNKOHGHZ53";
+
 
   var getRecipes = function (searchTerm) {
-    var queryURL = `https://api.edamam.com/search?q=${searchTerm}&app_id=${edamamAppId}&app_key=${edamamApiKey}&from=0&to=5`
+    var queryURL = `https://api.edamam.com/search?q=${searchTerm}&app_id=${edamamAppId}&app_key=${edamamApiKey}&from=0&to=6`
 
     $.ajax({
       url: queryURL,
