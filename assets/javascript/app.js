@@ -4,12 +4,12 @@ $(document).ready(function () {
   var edamamApiKey = "025e31a83b87bf9cc6cdf813e6a3da39";
 
   //Henry's FOURSQUARE API INFO
-  // var foursquareClientId = "CCB33WHFYPDPAAVR3D2YNRFEMWT1TM3HWHWFBDMM5MVKWE0X";
-  // var foursquareClientSecret = "G2QO2ALFA2RJHREZIZIVHD35AFIUSIIOPAW2YPUCIXJE4N03";
+  var foursquareClientId = "CCB33WHFYPDPAAVR3D2YNRFEMWT1TM3HWHWFBDMM5MVKWE0X";
+  var foursquareClientSecret = "G2QO2ALFA2RJHREZIZIVHD35AFIUSIIOPAW2YPUCIXJE4N03";
 
   //Peter's FOURSQUARE API Info
-  var foursquareClientId = "1M52NGCBLS0MUK3HBG1AVRDIOCGW3ZPXW3AVQOLS5FS4CIYW";
-  var foursquareClientSecret = "FFUS2J0ZOIINXQ440UAVHBPNSOY5HKHY12UXPQG1YUOQ3T1W";
+  // var foursquareClientId = "1M52NGCBLS0MUK3HBG1AVRDIOCGW3ZPXW3AVQOLS5FS4CIYW";
+  // var foursquareClientSecret = "LACZZB5UQAIAGQWRB25EMBTVZOECUP4JLQMMZTCAIS1MKVF3";
 
 
   var getRecipes = function (searchTerm) {
@@ -55,21 +55,29 @@ $(document).ready(function () {
 
             var venuePhoto = venuePhotoObj.response.photos.items;
             console.log(venuePhoto);
-            $(`#${venueID}`).attr("src", venuePhoto[0].prefix + "original" + venuePhoto[0].suffix)
+            $(`#${venueID} img`).attr("src", venuePhoto[0].prefix + "original" + venuePhoto[0].suffix)
             
             // get menu
             return $.ajax({
-              url: `https://api.foursquare.com/v2/venues/${venueID}/menu?client_id=${foursquareClientId}&client_secret=${foursquareClientSecret}&v=20180323&limit=1`,
+              url: `https://api.foursquare.com/v2/venues/${venueID}/tips?client_id=${foursquareClientId}&client_secret=${foursquareClientSecret}&v=20180323`,
               method: "GET"
             })
-          }).then(function(menuInfo) {
-            console.log(menuInfo);
-            var venueMenuLink = menuInfo.response.menu.provider.attributionLink;
-            console.log("Menu Link :" + venueMenuLink);
+          }).then(function(tipInfo) {
+            console.log(tipInfo);
+            var tips = tipInfo.response.tips.items;
+
+            console.log(tips);
+
+            for (var k = 0; k < tips.length; k++){
+              $(`#${venueID} p`).text(tips[k].text);
+              console.log(tips[k].text);
+            }
+            // var venueMenuLink = menuInfo.response.menu.provider.attributionLink;
+            // console.log("Menu Link :" + venueMenuLink);
 
             //get links
             return $.ajax({
-              url: `https://api.foursquare.com/v2/venues/${venueID}/links?client_id=${foursquareClientId}&client_secret=${foursquareClientSecret}&v=20180323&limit=1`,
+              url: `https://api.foursquare.com/v2/venues/${venueID}/links?client_id=${foursquareClientId}&client_secret=${foursquareClientSecret}&v=20180323`,
               method: "GET"
             })
           }).then(function(linkInfo) {
@@ -79,8 +87,9 @@ $(document).ready(function () {
             LinkLoop: //We want to break out of this loop when we get the first image.
             for (var j = 0; j < links.length; j ++)
             {
-              if(links[i].url){
-                console.log(links[i].url)
+              if(links[j].url){
+                $(`#${venueID} a`).attr("href", links[j].url).text("Link to restaurant!");
+                console.log(links[j].url)
                 break LinkLoop;
               }
             }
@@ -117,7 +126,8 @@ $(document).ready(function () {
       recipeCardBody = $("<div class='card-body'>");
       recipeTitle = $("<h5 class='card-title'>").html(recipes[i].recipe.label);
       recipeText = $("<p class='card-text'>").text("Here are the ingredients you need to make your dish.");
-      recipeCardBody.append(recipeText);
+      recipeLink = $("<a>").attr("href", recipes[i].recipe.url).text("Click here for the full recipe!");
+      recipeCardBody.append(recipeText).append(recipeLink);
 
       //Create HTML ul block for recipe list  second level
       recipeIngredientListHTML = $("<ul class='list-group list-group-flush'>");
@@ -149,14 +159,22 @@ $(document).ready(function () {
     restaurantID = restaurants[i].id;;
 
     //Create HTML img block for restaurant card second level
-    restaurantImageHTML = $("<img class='card-img-top' id='" + restaurantID + "'>");
+
+    restaurantInfo = $("<div id='"+restaurantID+"'>");
+    restaurantImageHTML = $("<img class='card-img-top'>");
+    var restaurantLink = $("<a class='links'>");
+    var restaurantTips = $("<p class='tips'>");
+
+    restaurantInfo.append(restaurantImageHTML);
+    restaurantInfo.append(restaurantTips);
+    restaurantInfo.append(restaurantLink);
 
     //Create HTML div block for restaurant card second level
     restaurantCardBody = $("<div class='card-body'>");
     restaurantTitle = $("<h5 class='card-title'>").html(restaurants[i].name);
     restaurantFormattedAddress = $("<p class='card-text'>").html(restaurants[i].location.formattedAddress);
-    restaurantCardBody.append(restaurantTitle).append(restaurantFormattedAddress);
-    restaurantHTML.append(restaurantImageHTML).append(restaurantCardBody);
+    restaurantCardBody.append(restaurantTitle).append(restaurantFormattedAddress).append(restaurantTips).append(restaurantLink);
+    restaurantHTML.append(restaurantInfo).append(restaurantCardBody);
 
     //write HTML to update the DOM
     $("#restaurants").append(restaurantHTML);
