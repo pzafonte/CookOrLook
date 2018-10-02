@@ -1,5 +1,5 @@
 $(document).ready(function () {
-
+  $("#headerRow").hide();
   var edamamAppId = "919ca68b";
   var edamamApiKey = "025e31a83b87bf9cc6cdf813e6a3da39";
 
@@ -191,5 +191,6 @@ $(document).ready(function () {
     getRestaurants(searchTerm, location);
     getRecipes(searchTerm);
     $("#carouselExampleIndicators").hide();
+    $("#headerRow").show();
   });
 });
