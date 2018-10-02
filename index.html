@@ -12,12 +12,12 @@
   <link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css?family=Pacifico" rel="stylesheet">
   <link rel="stylesheet" href="assets/css/style.css">
-  <title>HPP Project 1</title>
+  <title>Cook Or Look</title>
 </head>
 
 <body>
   <nav class="navbar sticky-top navbar-expand-lg navbar-dark bg-dark">
-    <a id="brand" class="navbar-brand ml-5" href="#">COL</a>
+    <a id="brand" class="navbar-brand ml-5" href="#">Cook Or Look</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
       aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
@@ -105,6 +105,8 @@
         <span class="sr-only">Next</span>
       </a>
     </div>
+
+    <div class="container">
     <!-- header row -->
     <div class="row" id= "headerRow">
       <div class= "col-12 col-md-6 d-flex justify-content-center align-content-start">
@@ -115,14 +117,17 @@
     </div>
     <!-- end header row -->
     <div class="row">
-      <div id="restaurants" class="col-12 col-md-6 d-flex justify-content-center align-content-start">
-        <div class="row"></div>
+      <div class="col-12 col-md-6">
+          <div id="restaurants"></div>
+        <!-- <div class="row"></div> -->
       </div>
-      <div id="recipes" class="col-12 col-md-6 d-flex">
-        <div class="row"></div>
+      <div class="col-12 col-md-6 card-columns">
+          <div id="recipes"></div>
+        <!-- <div class="row"></div> -->
       </div>
     </div>
   </div>
+</div>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <script src="assets/javascript/app.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.13.0/umd/popper.min.js"></script>
