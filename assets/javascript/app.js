@@ -6,13 +6,13 @@ $(document).ready(function () {
 
   //Henry's FOURSQUARE API INFO
 
-  // var foursquareClientId = "CCB33WHFYPDPAAVR3D2YNRFEMWT1TM3HWHWFBDMM5MVKWE0X";
-  // var foursquareClientSecret = "G2QO2ALFA2RJHREZIZIVHD35AFIUSIIOPAW2YPUCIXJE4N03";
+  var foursquareClientId = "CCB33WHFYPDPAAVR3D2YNRFEMWT1TM3HWHWFBDMM5MVKWE0X";
+  var foursquareClientSecret = "G2QO2ALFA2RJHREZIZIVHD35AFIUSIIOPAW2YPUCIXJE4N03";
 
 
   //Peter's FOURSQUARE API Info
-  var foursquareClientId = "SHVHQI2IKFBKLWX4E05DS0NZXBEGZHSL3DTLEXHJBWVZAZOH";
-  var foursquareClientSecret = "BDEGVWB3EATF5ZHHWDB4MAIQSU0L0P3JQFKNNJA5D1CIVDSY";
+  // var foursquareClientId = "SHVHQI2IKFBKLWX4E05DS0NZXBEGZHSL3DTLEXHJBWVZAZOH";
+  // var foursquareClientSecret = "BDEGVWB3EATF5ZHHWDB4MAIQSU0L0P3JQFKNNJA5D1CIVDSY";
 
   //Patrick's FOURSQUARE API Info
   // var foursquareClientId = "B0HAMAHTQD4FPS54HEDYVX5DSK5NUAHKYMU151KU0A5YXGAV";
@@ -21,7 +21,7 @@ $(document).ready(function () {
 
 
   var getRecipes = function (searchTerm) {
-    var queryURL = `https://api.edamam.com/search?q=${searchTerm}&app_id=${edamamAppId}&app_key=${edamamApiKey}&from=0&to=9`
+    var queryURL = `https://api.edamam.com/search?q=${searchTerm}&app_id=${edamamAppId}&app_key=${edamamApiKey}&from=0&to=18`
 
     $.ajax({
       url: queryURL,
@@ -37,7 +37,7 @@ $(document).ready(function () {
   var getRestaurants = function (searchTerm, location) {
 
 
-    var restaurantQueryURL = `https://api.foursquare.com/v2/venues/search?client_id=${foursquareClientId}&client_secret=${foursquareClientSecret}&limit=10&near=${location}&query=${searchTerm}&v=20180323`;
+    var restaurantQueryURL = `https://api.foursquare.com/v2/venues/search?client_id=${foursquareClientId}&client_secret=${foursquareClientSecret}&categoryId=4d4b7105d754a06374d81259&limit=10&near=${location}&query=${searchTerm}&v=20180323`;
 
     $.ajax({
       url: restaurantQueryURL,
@@ -75,7 +75,6 @@ $(document).ready(function () {
             console.log(tipInfo);
             var tips = tipInfo.response.tips.items;
             $(`#${venueID} p`).text("Top Customer Tip: " + tips[0].text);
-          
 
             //get links
             return $.ajax({
@@ -90,7 +89,7 @@ $(document).ready(function () {
             for (var j = 0; j < links.length; j ++)
             {
               if(links[j].url){
-                $(`#${venueID} a`).attr("href", links[j].url).text("Link Related to Restaurant");
+                $(`#${venueID} a`).attr("href", links[j].url).attr("target", "_blank").text("Link Related to Restaurant");
                 console.log(links[j].url)
                 break LinkLoop;
               }
@@ -118,7 +117,7 @@ $(document).ready(function () {
     for (var i = 0; i < recipes.length; i++) {
 
       //Create HTML div block for recipe card top level
-      recipeHTML = $("<div class='w-100 recipe card' id='r-" + i + "'>").css({"width": "18rem"});
+      recipeHTML = $("<div class='w-100 recipe card animated slideInUp' id='r-" + i + "'>").addClass('animated slideInUp');;
 
       console.log(recipes[i].recipe.label);
       //Create HTML img block for recipe card second level
@@ -128,7 +127,7 @@ $(document).ready(function () {
       recipeCardBody = $("<div class='card-body'>");
       recipeTitle = $("<h5 class='card-title'>").html(recipes[i].recipe.label);
       recipeText = $("<p class='card-text'>").text("Here are the ingredients you need to make your dish.");
-      recipeLink = $("<a>").attr("href", recipes[i].recipe.url).text("Click here for the full recipe!");
+      recipeLink = $("<a>").attr("href", recipes[i].recipe.url).attr("target", "_blank").text("Go To Full Recipe");
       recipeCardBody.append(recipeLink).append(recipeText);
 
       //Create HTML ul block for recipe list  second level
@@ -157,7 +156,7 @@ $(document).ready(function () {
     var restaurantFormattedAddress;
 
     //Create HTML div block for restaurant card top level
-    restaurantHTML = $("<div class='w-75 restaurant card' id='l-" + i + "'>");
+    restaurantHTML = $("<div class='w-75 restaurant card' id='l-" + i + "'>").addClass('animated slideInUp');;
     restaurantID = restaurants[i].id;;
 
     //Create HTML img block for restaurant card second level
