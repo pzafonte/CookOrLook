@@ -21,7 +21,7 @@ $(document).ready(function () {
 
 
   var getRecipes = function (searchTerm) {
-    var queryURL = `https://api.edamam.com/search?q=${searchTerm}&app_id=${edamamAppId}&app_key=${edamamApiKey}&from=0&to=5`
+    var queryURL = `https://api.edamam.com/search?q=${searchTerm}&app_id=${edamamAppId}&app_key=${edamamApiKey}&from=0&to=9`
 
     $.ajax({
       url: queryURL,
