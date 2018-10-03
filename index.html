@@ -41,10 +41,61 @@
         </div>
         <button id="get-results" class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
       </form>
+
     </div>
   </nav>
+
+  <div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="modalLabel">Review Input</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          Please add both a food related search term and a location.
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="container">
+    <h2>Use the above search for food to look for food to cook or restaurants to go to.</h2>
+    <!-- header row -->
+    <div class="row" id="headerRow">
+      <div class="col-12 col-md-6 d-flex justify-content-center align-content-start">
+        <h1>Restaurants</h1>
+      </div>
+      <div class="col-12 col-md-6 d-flex justify-content-center align-content-start">
+        <h1>Recipes</h1>
+      </div>
+      <!-- end header row -->
+      <div class="row">
+        <div class="col-12 col-md-6">
+          <div id="restaurants"></div>
+        </div>
+
+        <div class="col-12 col-md-6">
+          <div class="card-columns">
+            <div id="recipes"></div>
+          </div>
+          <div id="recipeError"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
   <div id="listBody">
-    <div id="carouselExampleIndicators" class="carousel slide carousel-fade animated flipInX" data-ride="carousel" data-interval="3000">
+
+
+    <div id="carouselExampleIndicators" class="carousel slide carousel-fade animated flipInX" data-ride="carousel"
+      data-interval="3000">
       <ol class="carousel-indicators">
         <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
         <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
@@ -107,32 +158,11 @@
       </a>
     </div>
 
-    <div class="container">
-    <!-- header row -->
-    <div class="row" id= "headerRow">
-      <div class= "col-12 col-md-6 d-flex justify-content-center align-content-start">
-        <h1>Restaurants</h1>
-    </div>
-    <div class= "col-12 col-md-6 d-flex justify-content-center align-content-start">
-        <h1>Recipes</h1>
-    </div>
-    <!-- end header row -->
-    <div class="row">
-      <div class="col-12 col-md-6">
-          <div id="restaurants"></div>
-        <!-- <div class="row"></div> -->
-      </div>
-      <div class="col-12 col-md-6 card-columns">
-          <div id="recipes"></div>
-        <!-- <div class="row"></div> -->
-      </div>
-    </div>
-  </div>
-</div>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-  <script src="assets/javascript/app.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.13.0/umd/popper.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.2/js/bootstrap.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="assets/javascript/app.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.13.0/umd/popper.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.2/js/bootstrap.min.js"></script>
 </body>
 
 </html>

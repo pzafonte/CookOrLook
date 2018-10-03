@@ -46,11 +46,8 @@ body {
 }
 
 .recipe{
-
   width: 33%;
 
-  /* margin-left: 30px;
-  margin-bottom: 30px; */
 }
 
 .card-body{
@@ -97,6 +94,20 @@ h1{
     margin-bottom: 25px;
     font-size: 50px;
 }
+
+h2{
+  font-family: 'Ubuntu', cursive;
+  align-content: center;
+  text-align: center;
+    margin-bottom: 45px;
+    font-size: 25px;
+    color: black;
+    -webkit-text-fill-color: white; /* Will override color (regardless of order) */
+    -webkit-text-stroke-width: 1px;
+    -webkit-text-stroke-color: black;
+    letter-spacing: 1.2;
+}
+
 
 .card-title{
   margin-left: 5px;

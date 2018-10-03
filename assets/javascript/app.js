@@ -1,6 +1,7 @@
-
 $(document).ready(function () {
   $("#headerRow").hide();
+  $("#recipeError").hide();
+
   var edamamAppId = "919ca68b";
   var edamamApiKey = "025e31a83b87bf9cc6cdf813e6a3da39";
 
@@ -21,6 +22,30 @@ $(document).ready(function () {
 
 
   var getRecipes = function (searchTerm) {
+
+    if (searchTerm === ""){
+      $("#recipes").html("");
+      $("#recipeError").html("");
+
+      $("#recipeError").show();
+
+      var recipeHTML = $("<div class='card'>").addClass('animated slideInUp');
+      var recipeCardBody = $("<div class='card-body'>");
+      var recipeTitle = $("<h5 class='card-title'>").text("Review Input")
+      var recipeText = $("<p class='card-text'>").text("Please enter a food related search term to get recipes");
+      recipeCardBody.append(recipeText);
+
+      recipeHTML.append(recipeTitle).append(recipeCardBody);
+
+      //write HTML to update the DOM
+      $("#recipeError").append(recipeHTML);
+      
+    }
+    else
+    {
+
+      $("#recipeError").hide();
+
     var queryURL = `https://api.edamam.com/search?q=${searchTerm}&app_id=${edamamAppId}&app_key=${edamamApiKey}&from=0&to=18`
 
     $.ajax({
@@ -32,9 +57,31 @@ $(document).ready(function () {
       parseRecipeObjToDOM(response);
 
     });
+
+  }
+
+
   }
 
   var getRestaurants = function (searchTerm, location) {
+
+    if (location === ""){
+      $("#restaurants").html("");
+
+      var restaurantsHTML = $("<div class='card'>").addClass('animated slideInUp');
+      var restaurantsCardBody = $("<div class='card-body'>");
+      var restaurantsTitle = $("<h5 class='card-title'>").text("Review Input")
+      var restaurantsText = $("<p class='card-text'>").text("Please enter a location to get restaurants");
+      restaurantsCardBody.append(restaurantsText);
+
+      restaurantsHTML.append(restaurantsTitle).append(restaurantsCardBody);
+
+      //write HTML to update the DOM
+      $("#restaurants").append(restaurantsHTML);
+      
+    }
+
+    else {
 
 
     var restaurantQueryURL = `https://api.foursquare.com/v2/venues/search?client_id=${foursquareClientId}&client_secret=${foursquareClientSecret}&categoryId=4d4b7105d754a06374d81259&limit=10&near=${location}&query=${searchTerm}&v=20180323`;
@@ -43,7 +90,7 @@ $(document).ready(function () {
       url: restaurantQueryURL,
       method: "GET"
     }).then(function (venueObj) {
-  
+
       console.log(venueObj);
       $("#restaurants").html("");
 
@@ -65,13 +112,13 @@ $(document).ready(function () {
             var venuePhoto = venuePhotoObj.response.photos.items;
             console.log(venuePhoto);
             $(`#${venueID} img`).attr("src", venuePhoto[0].prefix + "original" + venuePhoto[0].suffix)
-            
+
             // get menu
             return $.ajax({
               url: `https://api.foursquare.com/v2/venues/${venueID}/tips?client_id=${foursquareClientId}&client_secret=${foursquareClientSecret}&v=20180323&sort=popular`,
               method: "GET"
             })
-          }).then(function(tipInfo) {
+          }).then(function (tipInfo) {
             console.log(tipInfo);
             var tips = tipInfo.response.tips.items;
             $(`#${venueID} p`).text("Top Customer Tip: " + tips[0].text);
@@ -81,19 +128,18 @@ $(document).ready(function () {
               url: `https://api.foursquare.com/v2/venues/${venueID}/links?client_id=${foursquareClientId}&client_secret=${foursquareClientSecret}&v=20180323`,
               method: "GET"
             })
-          }).then(function(linkInfo) {
+          }).then(function (linkInfo) {
             console.log(linkInfo);
             var links = linkInfo.response.links.items;
 
             LinkLoop: //We want to break out of this loop when we get the first image.
-            for (var j = 0; j < links.length; j ++)
-            {
-              if(links[j].url){
-                $(`#${venueID} a`).attr("href", links[j].url).attr("target", "_blank").text("Link Related to Restaurant");
-                console.log(links[j].url)
-                break LinkLoop;
+              for (var j = 0; j < links.length; j++) {
+                if (links[j].url) {
+                  $(`#${venueID} a`).attr("href", links[j].url).attr("target", "_blank").text("Link Related to Restaurant");
+                  console.log(links[j].url)
+                  break LinkLoop;
+                }
               }
-            }
 
             i++;
             getVenueInfo(i);
@@ -102,6 +148,8 @@ $(document).ready(function () {
       }
 
     });
+
+  }
 
   }
 
@@ -161,7 +209,7 @@ $(document).ready(function () {
 
     //Create HTML img block for restaurant card second level
 
-    restaurantInfo = $("<div id='"+restaurantID+"'>");
+    restaurantInfo = $("<div id='" + restaurantID + "'>");
     restaurantImageHTML = $("<img class='card-img-top'>");
     restaurantLink = $("<a class='links'>");
     restaurantTips = $("<p class='tips'>");
@@ -181,11 +229,16 @@ $(document).ready(function () {
 
   $("#get-results").on("click", function (event) {
     event.preventDefault();
-    $(".carousel").hide();
-    $("#headerRow").show();
+
     var location = $("#location-text").val().trim().toLowerCase();
     var searchTerm = $("#search-text").val().trim().toLowerCase();
-    getRestaurants(searchTerm, location);
-    getRecipes(searchTerm);
+    if (location === "" && searchTerm === "") {
+      $('#modal').modal('toggle');
+    } else {
+      $(".carousel").hide();
+      $("#headerRow").show();
+      getRestaurants(searchTerm, location);
+      getRecipes(searchTerm);
+    }
   });
 });
